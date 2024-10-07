@@ -2,9 +2,11 @@
 
 #include <iostream>
 #include <cstdlib> 
-#include <time>
+#include <ctime>
 #include <vector>
 #include <string>
+#include <iomanip>
+#include <fstream>
 
 using namespace std;
 
@@ -54,6 +56,30 @@ class Movie
             reviewsHead = newNode;        
         }
         
+        // method to display all reviews
+        void displayReviews() const
+        {
+            if (!reviewsHead) // check if the list is empty
+            {
+                cout << "    > No reviews for " << title << "." << endl;
+                return;
+            }
+
+            // temp pointer to traverse the linked list
+            ReviewNode* temp = reviewsHead; 
+            int count = 1; 
+
+            // loop to traverse through and output reviews
+            while (temp)
+            {
+                cout << "    > Review #" << count << ": " << fixed 
+                << setprecision(1) << temp->rating << ": " 
+                << temp->comments << endl;
+                temp = temp->next; // move to next review
+                count++; // increment review count
+            }
+    }
+
         // getter for the title of the movie
         string getTitle() const { return title; }
 };
