@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include <cstdlib> 
+#include <time>
+#include <vector>
+#include <string>
 
 using namespace std;
 
@@ -13,7 +16,6 @@ struct ReviewNode
     ReviewNode* next;
 };
 
-// class for movie
 class Movie
 {
     private:
@@ -52,6 +54,8 @@ class Movie
             reviewsHead = newNode;        
         }
         
+        // getter for the title of the movie
+        string getTitle() const { return title; }
 };
 
 int main
@@ -61,6 +65,14 @@ int main
 
     // load movies from the input file
     vector<Movie> movies = loadMovies("../input.txt"); 
+
+    // loop to go through each movie and display reviews
+    for (const auto& movie : movies)
+    {
+        cout << "Movie: " << movie.getTitle() << endl; 
+        movie.displayReviews(); 
+        cout << endl; 
+    }
 
     return 0;
 }
