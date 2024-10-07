@@ -84,7 +84,10 @@ class Movie
         string getTitle() const { return title; }
 };
 
-int main
+// function prototypes
+vector<Movie> loadMovies(const string& file);
+
+int main()
 {
     // start random number generator
     srand(static_cast<unsigned int>(time(0))); 
@@ -101,4 +104,44 @@ int main
     }
 
     return 0;
+}
+
+/*
+    loadMovies() reads movie titles and their corresponding reviews from a file
+    arguments: 
+    const string& filename: The name of the file containing movie titles and reviews
+    returns:
+    vector<Movie>: A vector of Movie objects populated with titles and reviews
+*/
+vector<Movie> loadMovies(const string& file)
+{
+    vector<Movie> movies; 
+    ifstream fin(file); 
+
+    // if file is no good
+    if (!fin.good()) 
+    {
+        cout << "Error: unable to open file." << endl;
+        return movies; 
+    }
+
+    string title; 
+
+    // read title from file
+    while (getline(fin, title)) 
+    {
+        // create a Movie object
+        Movie movie(title); 
+        string comment; 
+        // read comments until empty line
+        while (getline(fin, comment) && !comment.empty()) 
+        {
+            // add review to movie
+            movie.addReview(comment); 
+        }
+        // add movie to vector
+        movies.push_back(movie); 
+    }
+    fin.close(); 
+    return movies; 
 }
